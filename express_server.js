@@ -8,6 +8,16 @@ const urlDatabase = {
   b2xVn2: "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com",
 };
+const generateRandomString = function() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < 6; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+};
+
+
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
@@ -32,6 +42,11 @@ app.get("/urls/:id", (req, res) => {
 
   const templateVars = { id, longURL};
   res.render("urls_show", templateVars);
+});
+
+app.get("/test-random", (req, res) => {
+  const randomString = generateRandomString();
+  res.send(`Random String: ${randomString}`);
 });
 
 app.post("/urls", (req, res) => {
